@@ -9,15 +9,15 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "crypto-polyfilled": "file:../crypto-polyfilled/crypto-polyfilled-1.0.0.tgz",
     "buffer": "^6.0.3",
+    "crypto-polyfilled": "file:../crypto-polyfilled/crypto-polyfilled-1.0.0.tgz",
     "expo": "~47.0.8",
+    "expo-dev-client": "~2.0.1",
     "expo-status-bar": "~1.4.2",
     "react": "18.1.0",
     "react-native": "0.70.5",
     "react-native-aes-crypto": "^2.1.1",
-    "react-native-get-random-values": "^1.8.0",
-    "expo-dev-client": "~2.0.1"
+    "react-native-get-random-values": "^1.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

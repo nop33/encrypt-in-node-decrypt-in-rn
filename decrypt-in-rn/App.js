@@ -12,7 +12,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   const encryptedPayload =
-    '{"salt":"7936ff05b3ffc314c614aef4f5bd6f3a19fe619c89b038e5134d0a99ff6c489048b0a450a2093538b8974b3d568b1da2a47408e958ed40af604d0d0716ba9da3","iv":"601ad906ffd8f061b494dcff4163456b2fe09e9580291f5d927326ec1d7d58d93cf9eb4cfb577f95ac156ff0c28f47c3561b065c7bc48aa2c918f00f76210fd2","encrypted":"6489a119c849774004e841caa91763bf6363a8e1cb5aaf"}';
+    '{"salt":"544849535f49535f415f434f4e5354414e545f53414c54","iv":"4d46ac2389b0bd4df07bef4dc6dc3e558c2aa9348375cdf285f66df0a298ce0fde523d40604e0ea8c8cc27c9e12352d0e7b80fc74ecaffd0178ec603b4e10dc8","encrypted":"c9c08907617b82d1cecc0f7ee52950f760ab13b0908e75"}';
   const password = "x";
 
   const decrypt = async () => {
@@ -24,8 +24,8 @@ export default function App() {
       const iv = Buffer.from(payload.iv, "hex");
       const encrypted = Buffer.from(payload.encrypted, "hex");
 
-      // const derivedKey = pbkdf2Sync(password, salt, 10000, 32, "sha256"); // <----------------------------------------------
-      const result = await Aes.pbkdf2(password, salt.toString("base64"), 10000, 256);
+      const result = await Aes.pbkdf2(password, salt.toString("utf8"), 10000, 256); // <--------------------------------
+      console.log(`\npbkdf2 derived key in hex format:\n${result}`);
       const derivedKey = Buffer.from(result, "hex");
 
       const decipher = createDecipheriv("aes-256-gcm", derivedKey, iv);

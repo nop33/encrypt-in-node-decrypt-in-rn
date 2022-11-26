@@ -8,8 +8,11 @@ const encrypt = (): string => {
   const ivByteLength = 64;
 
   const data = Buffer.from(dataToEncrypt, "utf8");
-  const salt = randomBytes(saltByteLength);
-  const derivedKey = pbkdf2Sync(password, salt, 10000, 32, "sha256"); // <----------------------------------------------
+  const salt = Buffer.from("THIS_IS_A_CONSTANT_SALT", "utf8");
+
+  const derivedKey = pbkdf2Sync(password, salt, 10000, 32, "sha512"); // <----------------------------------------------
+  console.log(`\npbkdf2Sync derived key in hex format:\n${derivedKey.toString("hex")}`);
+
   const iv = randomBytes(ivByteLength);
   const cipher = createCipheriv("aes-256-gcm", derivedKey, iv);
   const encrypted = Buffer.concat([cipher.update(data), cipher.final()]);
@@ -30,7 +33,7 @@ const decrypt = (encryptedPayload: string): string => {
   const salt = Buffer.from(payload.salt, "hex");
   const iv = Buffer.from(payload.iv, "hex");
   const encrypted = Buffer.from(payload.encrypted, "hex");
-  const derivedKey = pbkdf2Sync(password, salt, 10000, 32, "sha256"); // <----------------------------------------------
+  const derivedKey = pbkdf2Sync(password, salt, 10000, 32, "sha512"); // <----------------------------------------------
   const decipher = createDecipheriv("aes-256-gcm", derivedKey, iv);
   const data = encrypted.slice(0, encrypted.length - authTagLength);
   const authTag = encrypted.slice(encrypted.length - authTagLength, encrypted.length);
